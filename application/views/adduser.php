@@ -24,7 +24,7 @@
           <div class="form-group">
             <label class="control-label col-sm-2" for="email">Username:</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="username" pattern='[\w\.]+' id="username" value="<?php print_r((isset($user_id)) ? $row[0]->username : '');?>" placeholder="Hanya huruf, angka, dan titik, contoh: gani.marble2016" required/>
+              <input type="text" class="form-control" name="username" pattern='[\w\.]+' id="username" value="<?php print_r((isset($user_id)) ? $row[0]->username : '');?>" <?php print_r((isset($user_id)) ? 'disabled' : '');?> placeholder="Hanya huruf, angka, dan titik, contoh: gani.marble2016" required/>
             </div>
           </div>
           <div class="form-group">

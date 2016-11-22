@@ -11,8 +11,7 @@ class User_model extends CI_Model {
         public function login()
         {
         	$username = $this->input->post('username');
-        	//$password = sha1(md5($this->input->post('password')));
-        	$password = $this->input->post('password');
+        	$password = sha1(md5($this->input->post('password')));
 
         	$this->db->where('username', $username);
         	$this->db->where('password', $password);
@@ -60,8 +59,7 @@ class User_model extends CI_Model {
 
         public function edit_user()
         {
-        	$this->username = $this->input->post('username');
-        	if(!empty($this->input->post('pwd')))
+           	if(!empty($this->input->post('pwd')))
 	        	$this->password = sha1(md5($this->input->post('pwd')));
         	$this->fullname = $this->input->post('nama');
 	        $this->area = $this->input->post('area');
@@ -72,11 +70,11 @@ class User_model extends CI_Model {
 
 	        if($this->db->update('users',$this))
 	        {
-	        	$this->session->set_flashdata('action_user','<div class="notif-box bg-success text-success">User berhasil ditambahkan.</div>');
+	        	$this->session->set_flashdata('action_user','<div class="notif-box bg-success text-success">User berhasil diedit.</div>');
 	        }
 	        else
 	        {
-				$this->session->set_flashdata('action_user','<div class="notif-box bg-danger text-danger">User gagal ditambahkan. Silakan ulangi kembali.</div>');
+				$this->session->set_flashdata('action_user','<div class="notif-box bg-danger text-danger">User gagal diedit. Silakan ulangi kembali.</div>');
 	        }
         }
 
