@@ -35,9 +35,11 @@
 <!-- bootstrap-daterangepicker -->
 <script src="<?php echo base_url(); ?>/vendors/moment/min/moment.min.js"></script>
 <script src="<?php echo base_url(); ?>/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="<?php echo base_url(); ?>/vendors/bootstrap3-typeahead.min.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="<?php echo JS; ?>custom.min.js"></script>
+<script src="<?php echo JS; ?>global.js"></script>
 
 <!-- Flot -->
 <script>

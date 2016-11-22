@@ -15,3 +15,4 @@
 
 <!-- Custom Theme Style -->
 <link href="<?php echo CSS; ?>custom.min.css" rel="stylesheet">
+<link href="<?php echo CSS; ?>global.css" rel="stylesheet">

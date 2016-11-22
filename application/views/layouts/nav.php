@@ -76,6 +76,12 @@
                             <li><a href="../fixed_footer.html">Fixed Footer</a></li>
                         </ul>
                     </li>
+                    <li><a><i class="fa fa-user"></i>Users <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="../fixed_sidebar.html">List User</a></li>
+                            <li><a href="../fixed_footer.html">Add User</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <div class="menu_section">
