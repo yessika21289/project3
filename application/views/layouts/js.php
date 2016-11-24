@@ -38,6 +38,7 @@
 
 <!-- Custom Theme Scripts -->
 <script src="<?php echo JS; ?>custom.min.js"></script>
+<script src="<?php echo JS; ?>migration.js"></script>
 
 <!-- Flot -->
 <script>
