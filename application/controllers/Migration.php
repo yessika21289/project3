@@ -27,14 +27,16 @@ class Migration extends CI_Controller {
                 foreach($old_stok as $row) {
                     $this->load->model('Categories_model');
                     $id = $this->Categories_model->get_categories('id', array('name' => $row->NAMA_GROUP));
-                    $size = $this->size_mapping($row->TIPE);
-                    $qty = $this->qty_mapping($row->VOL, $size);
+                    $size = $this->sizeMapping($row->TIPE);
+                    $qty = $this->qtyMapping($row->VOL, $size);
                     $data[$i] = array(
                         'category_id'   => ($id) ? $id[0]->id : NULL,
                         'name'          => ($row->NAMA) ? $row->NAMA : NULL,
                         'length'        => ($size) ? $size['length'] : NULL,
                         'wide'          => ($size) ? $size['wide'] : NULL,
                         'qty'           => ($qty) ? $qty['qty'] : NULL,
+                        'box'           => ($row->G00001) ? $row->G00001 : NULL,
+                        'total'         => ($qty && $row->G00001) ? $qty['qty']*$row->G00001 : NULL,
                         'coverage'      => ($qty) ? ($qty['qty']*($size['length']/100)*($size['wide']/100)) : NULL
                     );
                     $i++;
@@ -50,7 +52,7 @@ class Migration extends CI_Controller {
         }
     }
 
-    public function size_mapping($size = NULL) {
+    public function sizeMapping($size = NULL) {
         if(!$size) {
             return array(
                 'length' => NULL,
@@ -65,7 +67,7 @@ class Migration extends CI_Controller {
         }
     }
 
-    public function qty_mapping($vol = NULL, $size = array()) {
+    public function qtyMapping($vol = NULL, $size = array()) {
         /*print_r($vol);
         print_r($size);
         echo 'size: '.($size['length']/100)*($size['wide']/100).' - ';

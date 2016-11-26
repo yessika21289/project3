@@ -15,7 +15,6 @@ $(document).ready(function() {
             },
             success:function (data) {
                 loading.hide();
-                //$(location).attr('href',document.location.origin);
                 document.location.href = '/migration'
             }
         });

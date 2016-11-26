@@ -9,7 +9,7 @@
 class Migration_model extends CI_Model
 {
     function old_stok() {
-        $this->db->select('NAMA_GROUP, NAMA, TIPE, VOL');
+        $this->db->select('NAMA_GROUP, NAMA, TIPE, VOL, G00001');
         $query = $this->db->get('stok');
         return $query->result();
     }
