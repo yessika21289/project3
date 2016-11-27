@@ -32,6 +32,13 @@
                             <li><a href="<?php echo site_url('home/index3'); ?>">Dashboard3</a></li>
                         </ul>
                     </li>
+                    <li><a href="<?php echo site_url('migration'); ?>"><i class="fa fa-cubes"></i> Migrasi Data </a>
+                    </li>
+                    <li><a><i class="fa fa-cubes"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo site_url('stocks'); ?>">Daftar Stok Barang</a></li>
+                        </ul>
+                    </li>
                     <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="<?php echo site_url('form'); ?>">General Form</a></li>
@@ -57,8 +64,8 @@
                     </li>
                     <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="../tables.html">Tables</a></li>
-                            <li><a href="../tables_dynamic.html">Table Dynamic</a></li>
+                            <li><a href="<?php echo site_url('tables'); ?>">Tables</a></li>
+                            <li><a href="<?php echo site_url('tables/dynamic'); ?>">Table Dynamic</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>

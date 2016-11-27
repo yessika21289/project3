@@ -37,9 +37,17 @@
 <script src="<?php echo base_url(); ?>/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="<?php echo base_url(); ?>/vendors/bootstrap3-typeahead.min.js"></script>
 
+<!-- DataTables -->
+<script src="<?php echo base_url(); ?>/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url(); ?>/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?php echo base_url(); ?>/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+
 <!-- Custom Theme Scripts -->
 <script src="<?php echo JS; ?>custom.min.js"></script>
 <script src="<?php echo JS; ?>global.js"></script>
+<script src="<?php echo JS; ?>migration.js"></script>
+<script src="<?php echo JS; ?>stocks.js"></script>
 
 <!-- Flot -->
 <script>
