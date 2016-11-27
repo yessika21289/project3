@@ -13,7 +13,6 @@
 <!-- bootstrap-daterangepicker -->
 <link href="<?php echo base_url(); ?>/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 <!-- DataTables -->
-<link href="<?php echo base_url(); ?>/vendors/" rel="stylesheet">
 <link href="<?php echo base_url(); ?>/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo base_url(); ?>/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
 

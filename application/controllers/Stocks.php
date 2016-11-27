@@ -22,13 +22,16 @@ class Stocks extends CI_Controller {
         $this->load->model('Stocks_model');
         $stocks = $this->Stocks_model->get_data();
         $i = 0;
+
         foreach($stocks as $row) {
+            $stocks[$i]['size'] = $row['length'].'x'.$row['wide'];
+            $stocks[$i]['coverage'] = ($row['coverage'] && $row['box']) ? $row['coverage']*$row['box'] : NULL;
             $stocks[$i]['action'] =
                 '<button type="submit" product_id="'.$row['pid'].'" class="btn btn-primary edit_btn" ><i class="fa fa-edit"></i></button>
                 <button type="submit" product_id="'.$row['pid'].'" class="btn btn-primary del_btn"><i class="fa fa-remove"></i></button>';
             $i++;
         }
-        //print_r($stocks);exit;
+//        print_r($stocks);exit;
         echo json_encode($stocks);
     }
 }

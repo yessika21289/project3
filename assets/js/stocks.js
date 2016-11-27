@@ -1,9 +1,11 @@
 /**
  * Created by nguks on 24/11/2016.
  */
-
 $(document).ready(function() {
-    $('#stocks-table').DataTable({
+    var add_button = $('#add-stock-btn');
+    var add_modal  = $('.add-stock-modal');
+
+    var table = $('#stocks-table').DataTable({
         "paging"    : true,
         "lengthChange": true,
         "searching": true,
@@ -19,7 +21,7 @@ $(document).ready(function() {
         "columns": [
             { "data": "category" },
             { "data": "name" },
-            { "data": "length" },
+            { "data": "size" },
             { "data": "qty" },
             { "data": "box" },
             { "data": "total" },
@@ -28,4 +30,9 @@ $(document).ready(function() {
             { "data": "action" }
         ]
     });
+
+    add_button.on('click', function() {
+        add_modal.modal('show');
+    });
+
 });
