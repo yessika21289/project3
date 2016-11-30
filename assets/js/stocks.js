@@ -35,14 +35,25 @@ $(document).ready(function() {
         add_modal.modal('show');
     });
 
-    
+    $.get('./stocks/categories', function(data){
+        $input.typeahead({
+            source: data,
+            autoSelect: true
+        });
+        $input.change(function() {
+            var current = $input.typeahead("getActive");
+            if (current) {
+                // Some item from your model is active!
+                if (current.name == $input.val()) {
+                    // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
+                } else {
+                    // This means it is only a partial match, you can either add a new item
+                    // or take the active if you don't want new items
+                }
+            } else {
+                // Nothing is active so it is a new value (or maybe empty value)
+            }
+        });
 
-    $('#category_name').autocomplete({
-        serviceUrl: '/stocks/categories',
-        onSelect: function (suggestion) {
-            console.log(suggestion);
-            //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-        }
     });
-
 });
