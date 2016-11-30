@@ -35,6 +35,8 @@ $(document).ready(function() {
         add_modal.modal('show');
     });
 
+    
+
     $('#category_name').autocomplete({
         serviceUrl: '/stocks/categories',
         onSelect: function (suggestion) {

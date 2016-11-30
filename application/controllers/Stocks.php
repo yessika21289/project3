@@ -41,7 +41,18 @@ class Stocks extends CI_Controller {
     
     public function getCategories() {
         $categories = $this->Stocks_model->get_categories();
-        echo json_encode($categories);
+        $data = array();
+        foreach ($categories as $key => $value) {
+            $data[$key]['id'] = $key;
+            $data[$key]['name'] = $value->name;
+        }
+
+        $this->output
+            ->set_status_header(200)
+            ->set_content_type('application/json', 'utf-8')
+            ->set_output(json_encode($data, JSON_PRETTY_PRINT))
+            ->_display();
+        exit;
     }
     
     public function addData() {
