@@ -15,7 +15,7 @@ $(document).ready(function() {
         "autoWidth": true,
         "pageLength": 10,
         "ajax": {
-            "url": '/stocks/get-data',
+            "url": './stocks/get-data',
             'dataSrc':''
         },
         "columns": [
@@ -33,6 +33,14 @@ $(document).ready(function() {
 
     add_button.on('click', function() {
         add_modal.modal('show');
+    });
+
+    $('#category_name').autocomplete({
+        serviceUrl: '/stocks/categories',
+        onSelect: function (suggestion) {
+            console.log(suggestion);
+            //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+        }
     });
 
 });

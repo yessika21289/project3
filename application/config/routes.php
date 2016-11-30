@@ -54,3 +54,5 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 
 $route['stocks/get-data'] = 'Stocks/getData';
+$route['stocks/add-data'] = 'Stocks/addData';
+$route['stocks/categories'] = 'Stocks/getCategories';

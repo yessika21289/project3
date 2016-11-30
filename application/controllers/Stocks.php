@@ -12,6 +12,11 @@ class Stocks extends CI_Controller {
      * Index Page for this controller.
      */
 
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('Stocks_model');
+    }
+
     public function index()
     {
         $this->template->title('Stok Barang');
@@ -19,7 +24,6 @@ class Stocks extends CI_Controller {
     }
     
     public function getData() {
-        $this->load->model('Stocks_model');
         $stocks = $this->Stocks_model->get_data();
         $i = 0;
 
@@ -33,5 +37,18 @@ class Stocks extends CI_Controller {
         }
 //        print_r($stocks);exit;
         echo json_encode($stocks);
+    }
+    
+    public function getCategories() {
+        $categories = $this->Stocks_model->get_categories();
+        echo json_encode($categories);
+    }
+    
+    public function addData() {
+        print_r($_POST);exit;
+        if($_POST) {
+            $now = time();
+            $this->Stocks_model->add_data($_POST);
+        }
     }
 }
