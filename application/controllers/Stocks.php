@@ -19,7 +19,7 @@ class Stocks extends CI_Controller {
 
     public function index()
     {
-        $this->template->title('Stok Barang');
+        $this->template->title('Stok');
         $this->template->build('stock_list');
     }
     
@@ -55,11 +55,32 @@ class Stocks extends CI_Controller {
         exit;
     }
     
+    public function getNames() {
+        $names = $this->Stocks_model->get_names();
+        $data = array();
+        foreach ($names as $key => $value) {
+            $data[$key]['id'] = $key;
+            $data[$key]['name'] = $value->name;
+        }
+
+        $this->output
+            ->set_status_header(200)
+            ->set_content_type('application/json', 'utf-8')
+            ->set_output(json_encode($data, JSON_PRETTY_PRINT))
+            ->_display();
+        exit;
+    }
+
+    public function add() {
+        $this->template->title('Stok Barang');
+        $this->template->build('add_stock_form');
+    }
+    
     public function addData() {
-        print_r($_POST);exit;
+        print_r($this->input->post());exit;
         if($_POST) {
             $now = time();
-            $this->Stocks_model->add_data($_POST);
+            $this->Stocks_model->add_data($this->input->post());
         }
     }
 }

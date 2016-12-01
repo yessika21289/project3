@@ -27,7 +27,17 @@ class Stocks_model extends CI_Model
         return $query->result();
     }
 
-    function add_data($data = array()) {
-        
+    function get_names() {
+        $this->db->distinct();
+        $this->db->select('name');
+        $this->db->order_by('name');
+        $query = $this->db->get('products');
+        return $query->result();
+    }
+
+    function add_data($post = array()) {
+        $data = array(
+            
+        );
     }
 }
