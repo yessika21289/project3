@@ -4,6 +4,11 @@
 $(document).ready(function() {
     var add_button = $('#add-stock-btn');
     var add_modal  = $('.add-stock-modal');
+    $('.amount').autoNumeric('init', {
+        aSep: '.',
+        aDec: ',',
+        unSetOnSubmit: true
+    });
 
     var table = $('#stocks-table').DataTable({
         "paging"    : true,
@@ -66,4 +71,47 @@ $(document).ready(function() {
         $('#myModal2').modal('hide');
     } );
 
+    var $category = $('.category');
+    $.get('/stocks/categories', function(data){
+        $category.typeahead({
+            source: data,
+            autoSelect: true
+        });
+        $category.change(function() {
+            var current = $category.typeahead("getActive");
+            if (current) {
+                // Some item from your model is active!
+                if (current.name == $category.val()) {
+                    // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
+                } else {
+                    // This means it is only a partial match, you can either add a new item
+                    // or take the active if you don't want new items
+                }
+            } else {
+                // Nothing is active so it is a new value (or maybe empty value)
+            }
+        });
+    });
+
+    var $name = $('.name');
+    $.get('/stocks/names', function(data){
+        $name.typeahead({
+            source: data,
+            autoSelect: true
+        });
+        $name.change(function() {
+            var current = $name.typeahead("getActive");
+            if (current) {
+                // Some item from your model is active!
+                if (current.name == $name.val()) {
+                    // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
+                } else {
+                    // This means it is only a partial match, you can either add a new item
+                    // or take the active if you don't want new items
+                }
+            } else {
+                // Nothing is active so it is a new value (or maybe empty value)
+            }
+        });
+    });
 });

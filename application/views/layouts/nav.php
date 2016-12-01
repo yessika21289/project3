@@ -34,9 +34,10 @@
                     </li>
                     <li><a href="<?php echo site_url('migration'); ?>"><i class="fa fa-cubes"></i> Migrasi Data </a>
                     </li>
-                    <li><a><i class="fa fa-cubes"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-cubes"></i> Stok <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="<?php echo site_url('stocks'); ?>">Daftar Stok Barang</a></li>
+                            <li><a href="<?php echo site_url('stocks/add'); ?>">Tambah Stok</a></li>
+                            <li><a href="<?php echo site_url('stocks'); ?>">Daftar Stok</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
