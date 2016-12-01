@@ -48,6 +48,7 @@
 <script src="<?php echo JS; ?>global.js"></script>
 <script src="<?php echo JS; ?>migration.js"></script>
 <script src="<?php echo JS; ?>stocks.js"></script>
+<script src="<?php echo JS; ?>selling.js"></script>
 
 <!-- Flot -->
 <script>

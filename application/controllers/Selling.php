@@ -13,4 +13,9 @@ class Selling extends CI_Controller {
     	$this->template->title('Penjualan');
         $this->template->build('selling');
     }
+
+    public function saveSelling()
+    {
+    	print_r($this->input->post());
+    }
 }

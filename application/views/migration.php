@@ -9,5 +9,10 @@
     <?php endif; ?>
 </div>
 <div class="row">
-    <a id="stocks_migration" href="javascript:void(0);" class="btn btn-info btn-lg">Stok</a>
+	<div class="col-xs-1">
+    	<a id="stocks_migration" href="javascript:void(0);" class="btn btn-info btn-lg">Stok</a>
+    </div>
+	<div class="col-xs-1">
+    	<a id="stocks_migration" href="javascript:sellMigration()" class="btn btn-info btn-lg">Sell</a>
+    </div>
 </div>

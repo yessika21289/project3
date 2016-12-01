@@ -34,4 +34,16 @@ class Stocks extends CI_Controller {
 //        print_r($stocks);exit;
         echo json_encode($stocks);
     }
+
+    public function getStockSelling() {
+        $this->load->model('Stocks_model');
+        $stocks = $this->Stocks_model->get_data();
+
+        foreach($stocks as $key=>$row) {
+            $stocks[$key]['size'] = $row['length'].'x'.$row['wide'];
+            $stocks[$key]['coverage'] = ($row['coverage'] && $row['box']) ? $row['coverage']*$row['box'] : NULL;
+        }
+
+        echo json_encode($stocks);
+    }
 }
