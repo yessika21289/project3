@@ -13,33 +13,35 @@
           <h2>Form Penjualan</h2>
           <div class="clearfix"></div>
         </div> -->
-        <form class="form-horizontal" method="post" action="<?php echo base_url();?>selling/saveSelling">
+        <?php echo $this->session->flashdata('save_faktur');?>
+        <form class="form-horizontal" id="selling-header" method="post" action="<?php echo base_url();?>selling/saveSelling">
+          <input type="hidden" name="selling-id" id="selling-id" value="<?php echo $selling_id;?>" />
           <fieldset>
             <legend>Info Faktur</legend>
             <div class="form-group">
-              <label class="control-label col-sm-1" for="sell-date">Tanggal:</label>
+              <label class="control-label col-sm-1" for="faktur-date">Tanggal:</label>
               <div class="col-sm-3">
-                <input type="date" class="form-control" name="sell-date" id="sell-date" required/>
+                <input type="date" class="form-control" name="faktur-date" id="faktur-date" value="<?php echo date('Y-m-d',$selling[0]['date_faktur']);?>" required/>
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-1" for="faktur-no">No. Faktur:</label>
               <div class="col-sm-3">
-                <input type="text" class="form-control" name="faktur-no" id="faktur-no" required />
+                <input type="text" class="form-control" name="faktur-no" id="faktur-no" value="<?php echo $selling[0]['no_faktur'];?>" required />
               </div>
               <label class="control-label col-sm-1" for="spj-no">No. SPJ:</label>
               <div class="col-sm-3">
-                <input type="text" class="form-control" name="spj-no" id="spj-no" />
+                <input type="text" class="form-control" name="spj-no" id="spj-no" value="<?php echo $selling[0]['no_spj'];?>" />
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-1" for="top">T.O.P:</label>
               <div class="col-sm-3">
-                <input type="text" class="form-control" name="top" id="top" />
+                <input type="text" class="form-control" name="top" id="top" value="<?php echo $selling[0]['top'];?>" />
               </div>
               <label class="control-label col-sm-1" for="jt-date">Tgl. J.T:</label>
               <div class="col-sm-3">
-                <input type="date" class="form-control" name="jt-date" id="jt-date" />
+                <input type="date" class="form-control" name="jt-date" id="jt-date" value="<?php echo ($selling[0]['date_jt']) ? date('Y-m-d',$selling[0]['date_jt']) : '';?>" />
               </div>
             </div>
             <div class="form-group">
@@ -47,80 +49,58 @@
               <div class="col-sm-3">
                 <select class="form-control" name="sales" id="sales" required>
                   <option></option>
-                  <option>adsfaas</option>
+                  <?php
+                  print_r($sales);
+                  foreach ($sales as $sl) {
+                    $selected = ($selling[0]['sales_id'] != $sl['KODE']) ? '' : 'selected';
+                    echo "<option value='".$sl['KODE']."' ".$selected.">".$sl['NAMA']."</option>";
+                  }
+                  ?>
                 </select>
               </div>
-              <label class="control-label col-sm-1" for="inventory">Gudang:</label>
+              <label class="control-label col-sm-1" for="warehosue">Gudang:</label>
               <div class="col-sm-3">
-                <select class="form-control" name="inventory" id="inventory" required>
+                <select class="form-control" name="warehouse" id="warehouse" required>
                   <option></option>
-                  <option>adsfaas</option>
+                  <?php
+                  foreach ($warehouse as $wh) {
+                    $selected = ($selling[0]['warehouse_id'] != $wh['wid']) ? '' : 'selected';
+                    echo "<option value='".$wh['wid']."' ".$selected.">".$wh['name']." - ".$wh['address']."</option>";
+                  }
+                  ?>
                 </select>
               </div>            
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-1" for="sales">Pelanggan:</label>
-              <div class="col-sm-3"> 
-                <input type="text" class="form-control" name="sales" id="sales" placeholder="">
+              <label class="control-label col-sm-1" for="cust-name">Pelanggan:</label>
+              <div class="col-sm-3">
+                <input type="hidden" name="cust-id" id="cust-id" value="<?php echo $selling[0]['cust_id'];?>" />
+                <input type="text" class="form-control" name="cust-name" id="cust-name" value="<?php echo $selling[0]['NAMA'];?>" readonly />
+              </div>
+              <div class="col-sm-1">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#customer-modal" data-backdrop="static" data-keyboard="false">+</button>
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-1" for="inventory">Alamat:</label>
+              <label class="control-label col-sm-1" for="cust-address">Alamat:</label>
               <div class="col-sm-11">
-                <input type="text" class="form-control" name="inventory" id="inventory" placeholder="">
+                <input type="text" class="form-control" name="cust-address" id="cust-address" value="<?php echo $selling[0]['ALAMAT'];?>" readonly />
               </div>            
             </div>
           </fieldset>
           <br/><br/>
           <fieldset>
             <legend>Detail Barang</legend>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"><strong>+</strong> Tambah Barang</button>
-            <table class="table table-hover table-striped">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-product-selling-modal" data-backdrop="static" data-keyboard="false"><strong>+</strong> Tambah Barang</button>
+            <table id="list-product-selling" class="table table-hover table-striped">
               <thead>
-                <th>No</th>
-                <th>Nama Barang</th>
-                <th>Ukuran</th>
+                <th>Product ID</th>
                 <th>Qty</th>
                 <th>Satuan</th>
                 <th>Harga</th>
-                <th>Jumlah</th>
-                <th></th>
-                <th></th>
+                <th>Harga Total</th>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Keramik</td>
-                  <td>60 x 90</td>
-                  <td>10</td>
-                  <td>dos</td>
-                  <td><?php echo number_format(1000000,2,',','.');?></td>
-                  <td><?php echo number_format(10000000,2,',','.');?></td>
-                  <td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-                  <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Keramik</td>
-                  <td>60 x 90</td>
-                  <td>10</td>
-                  <td>dos</td>
-                  <td><?php echo number_format(1000000,2,',','.');?></td>
-                  <td><?php echo number_format(10000000,2,',','.');?></td>
-                  <td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-                  <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Keramik</td>
-                  <td>60 x 90</td>
-                  <td>10</td>
-                  <td>dos</td>
-                  <td><?php echo number_format(1000000,2,',','.');?></td>
-                  <td><?php echo number_format(10000000,2,',','.');?></td>
-                  <td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
-                  <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                </tr>
               </tbody>
             </table>
           </fieldset>
@@ -130,31 +110,31 @@
             <div class="form-group">
               <label class="control-label col-sm-1" for="grand-total">Total:</label>
               <div class="col-sm-3">
-                <div class="form-control" id="grand-total">2000000</div>
+                <input class="form-control" name="grand-total" id="grand-total" readonly />
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-1" for="grand-discount">Potongan (Rp):</label>
               <div class="col-sm-3">
-                <input type="text" class="form-control" name="grand-discount" id="grand-discount" placeholder="">
+                <input type="text" class="form-control" name="grand-discount" id="grand-discount" value="<?php echo $selling[0]['discount'];?>" />
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-1" for="grand-total-nett">Netto:</label>
               <div class="col-sm-3">
-                <div class="form-control" id="grand-total-nett"></div>
+                <input class="form-control" name="grand-total-nett" id="grand-total-nett" readonly />
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-1" for="dp">D.P.:</label>
               <div class="col-sm-3">
-                <input type="text" class="form-control" name="dp" id="dp" placeholder="">
+                <input type="text" class="form-control" name="dp" id="dp" value="<?php echo $selling[0]['dp'];?>" />
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-1" for="debt">Kurang:</label>
               <div class="col-sm-3">
-                <div class="form-control" id="debt"></div>
+                <input class="form-control" name="debt" id="debt" readonly />
               </div>
             </div>
             <div class="form-group">
@@ -171,83 +151,83 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="add-product-selling-modal" role="dialog">
   <div class="modal-dialog modal-lg">
-  
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Tambah Barang</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal">
+    <form class="form-horizontal" id="add-product-selling">
+      <input type="hidden" name="selling-id" id="selling-id" value="<?php echo $selling_id;?>" />
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Tambah Barang</h4>
+        </div>
+        <div class="modal-body">
           <div class="form-group">
-            <label class="control-label col-sm-2" for="item-name">Nama Barang:</label>
+            <label class="control-label col-sm-2" for="product-name">Nama Barang:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="item-name" placeholder="">
+              <input type="hidden" name="product-id" id="product-id" value="1" />
+              <input type="text" class="form-control" name="product-name" id="product-name" value="slfjhsadifjsaf" readonly required />
             </div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" data-backdrop="static" data-keyboard="false">+</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test" data-keyboard="false">+</button>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="qty">Qty:</label>
             <div class="col-sm-2">
-              <input type="text" class="form-control" id="qty" placeholder="">
+              <input type="text" class="form-control" name="qty" id="qty" required />
             </div>
             <label class="control-label col-sm-1" for="unit">Satuan:</label>
             <div class="col-sm-1">
-              <input type="text" class="form-control" id="unit" placeholder="">
+              <input type="text" class="form-control" name="unit" id="unit" required />
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="sell-price">Harga Jual:</label>
             <div class="col-sm-4">
-              <input type="text" class="form-control" id="sell-price" placeholder="">
+              <input type="text" class="form-control" name="sell-price" id="sell-price" autocomplete="off" required />
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="discount-1">D.1.(%):</label>
             <div class="col-sm-1">
-              <input type="text" class="form-control" id="discount-1" placeholder="">
+              <input type="text" class="form-control" name="discount-1" id="discount-1" />
             </div>
             <label class="control-label col-sm-1" for="discount-2">D.2.(%):</label>
             <div class="col-sm-1">
-              <input type="text" class="form-control" id="discount-2" placeholder="">
+              <input type="text" class="form-control" name="discount-2" id="discount-2" />
             </div>
             <label class="control-label col-sm-1" for="discount-3">Potongan (Rp):</label>
             <div class="col-sm-1">
-              <input type="text" class="form-control" id="discount-3" placeholder="">
+              <input type="text" class="form-control" name="discount-3" id="discount-3" />
             </div>
             <label class="control-label col-sm-2" for="ppn">PPn (%):</label>
             <div class="col-sm-1">
-              <input type="text" class="form-control" id="ppn" placeholder="">
+              <input type="text" class="form-control" name="ppn" id="ppn" />
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="price-nett">Harga Nett:</label>
             <div class="col-sm-4">
-              <div class="form-control" id="price-nett"></div>
+              <input class="form-control" name="price-nett" id="price-nett" readonly />
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="price-total">Harga Total:</label>
             <div class="col-sm-4">
-              <div class="form-control" id="price-total"></div>
+              <input class="form-control" name="price-total" id="price-total" readonly />
             </div>
           </div>
-        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Tambah</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Tambah</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-      </div>
-    </div>
-    
+    </form>
   </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal2" role="dialog">
+<div class="modal fade" id="product-list-modal" role="dialog">
   <div class="modal-dialog modal-lg" style="background-color:yellow;">
   
     <!-- Modal content-->
@@ -260,6 +240,7 @@
         <table id="stocks-table-selling" class="table table-hover table-striped">
           <thead>
             <th>Kategori</th>
+            <th>ID</th>
             <th>Nama</th>
             <th>Ukuran</th>
             <th>Isi @dos</th>
@@ -278,5 +259,64 @@
       </div>
     </div>
     
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="customer-modal" role="dialog">
+  <div class="modal-dialog modal-lg" style="background-color:yellow;">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Daftar Pelanggan</h4>
+      </div>
+      <div class="modal-body">
+        <table id="customer-table" class="table table-hover table-striped" width="100%">
+          <thead>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Alamat</th>
+            <th>Kota</th>
+            <th>Telp</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div class="modal fade" id="test" role="dialog">
+
+  <div class="modal-dialog modal-lg" style="background-color:yellow;">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Daftar Pelanggan</h4>
+      </div>
+      <div class="modal-body">
+        <table id="customer-table" class="table table-hover table-striped" width="100%">
+          <thead>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Alamat</th>
+            <th>Kota</th>
+            <th>Telp</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+      </div>
+    </div>
   </div>
 </div>

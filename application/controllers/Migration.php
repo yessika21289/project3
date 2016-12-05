@@ -94,7 +94,7 @@ class Migration extends CI_Controller {
                 'top'           => ($row->TOP) ? $row->TOP : NULL,
                 'date_jt'       => ($row->TGL_JT) ? strtotime($row->TGL_JT) : NULL,
                 'sales_id'      => ($row->KD_SALES) ? $row->KD_SALES : NULL,
-                'inventory_id'  => ($row->KD_GUD) ? $row->KD_GUD : NULL,
+                'warehouse_id'  => ($row->KD_GUD) ? $row->KD_GUD : NULL,
                 'cust_id'       => ($row->KD_CUST) ? $row->KD_CUST : NULL,
                 'price_total'   => ($row->JUMLAH) ? $row->JUMLAH : 0,
                 'discount'      => ($row->POTONGAN) ? $row->POTONGAN : 0,

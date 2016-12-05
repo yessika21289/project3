@@ -40,39 +40,8 @@ $(document).ready(function() {
         add_modal.modal('show');
     });
 
-    var stocks_table_selling = $('#stocks-table-selling').DataTable({
-        "paging"    : true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": false,
-        "responsive": true,
-        "autoWidth": true,
-        "pageLength": 5,
-        "ajax": {
-            "url": './stocks/getStockSelling',
-            'dataSrc':''
-        },
-        "columns": [
-            { "data": "category" },
-            { "data": "name" },
-            { "data": "size" },
-            { "data": "qty" },
-            { "data": "box" },
-            { "data": "total" },
-            { "data": "coverage" },
-            { "data": "selling_price" }
-        ]
-    });
-
-    $('#stocks-table-selling tbody').on('click', 'tr', function () {
-        var data = stocks_table_selling.row( this ).data();
-        $('#item-name').val(data.name);
-        $('#myModal2').modal('hide');
-    } );
-
     var $category = $('.category');
-    $.get('/stocks/categories', function(data){
+    $.get('./stocks/categories', function(data){
         $category.typeahead({
             source: data,
             autoSelect: true
@@ -94,7 +63,7 @@ $(document).ready(function() {
     });
 
     var $name = $('.name');
-    $.get('/stocks/names', function(data){
+    $.get('./stocks/names', function(data){
         $name.typeahead({
             source: data,
             autoSelect: true

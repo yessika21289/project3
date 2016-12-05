@@ -87,7 +87,7 @@
                     <li><a><i class="fa fa-sellsy"></i>Penjualan <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="../fixed_sidebar.html">Daftar Faktur Jual</a></li>
-                            <li><a href="../fixed_footer.html">Buat Faktur Jual</a></li>
+                            <li><a href="<?php echo base_url();?>selling/new_invoice">Buat Faktur Jual</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-user"></i>Users <span class="fa fa-chevron-down"></span></a>

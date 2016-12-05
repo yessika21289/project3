@@ -35,7 +35,7 @@ function check_duplicate_user(event, username){
 $(document).ready(function() {
     var $input = $('.area-form');
 
-    $.get('./exist_area', function(data){
+    $.get('./user/exist_area', function(data){
         $input.typeahead(
             {source: data, 
             autoSelect: true
