@@ -1,6 +1,3 @@
-/**
- * Created by nguks on 24/11/2016.
- */
 $(document).ready(function() {
     var qty        = $('#qty');
     var sell_price = $('#sell-price');
@@ -29,6 +26,31 @@ $(document).ready(function() {
     })
 
     var grand_total_sum = 0;
+
+    var selling_list = $('#table-selling-list').DataTable({
+        "paging"    : true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": false,
+        "responsive": true,
+        "autoWidth": true,
+        "pageLength": 10,
+        "ajax": {
+            "url": '/selling/getSellingList',
+            'dataSrc':''
+        },
+        "columns": [
+            { "data": "no" },
+            { "data": "no_faktur" },
+            { "data": "date_faktur" },
+            { "data": "price_nett" },
+            { "data": "dp" },
+            { "data": "debt" },
+            { "data": "edit" }
+        ]
+    });
+
     var list_product_selling = $('#list-product-selling').DataTable({
         "paging"    : true,
         "lengthChange": true,
@@ -39,7 +61,7 @@ $(document).ready(function() {
         "autoWidth": true,
         "pageLength": 5,
         "ajax": {
-            "url": '/selling/getProductSelling',
+            "url": '/selling/getProductSelling/'+$('#selling-id').val(),
             'dataSrc':''
         },
         "columns": [

@@ -7,8 +7,13 @@ class Selling_model extends CI_Model
     }
 
     function get_data($id = 0) {
-    	$this->db->join('customer','customer.KODE = selling.cust_id');
-    	$query = $this->db->get_where('selling', array('id'=>$id));
+    	$this->db->select('selling.*, customer.NAMA, customer.ALAMAT');
+    	$this->db->join('customer','customer.KODE = selling.cust_id', 'left');
+    	if($id == 0)
+    		$query = $this->db->get('selling');
+    	else{
+    		$query = $this->db->get_where('selling', array('id'=>$id));
+    	}
         return $query->result_array();
     }
 
@@ -21,8 +26,11 @@ class Selling_model extends CI_Model
     	return $this->db->insert_id();
     }
 
-    function get_product_selling(){
-    	$query = $this->db->get('selling_products');
+    function get_product_selling($selling_id = 0){
+    	if($selling_id == 0)
+    		$query = $this->db->get('selling_products');
+    	else
+    		$query = $this->db->get_where('selling_products', array('selling_id'=>$selling_id));
     	return $query->result_array();
     }
 

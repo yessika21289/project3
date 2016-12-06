@@ -7,6 +7,12 @@ class Selling extends CI_Controller {
 		parent::__construct();
 	}
 
+	public function index()
+	{
+    	$this->template->title('Daftar Faktur Jual');
+        $this->template->build('selling_list');
+	}
+
 	public function invoice($id)
     {
     	$this->load->model('Warehouse_model');
@@ -21,8 +27,8 @@ class Selling extends CI_Controller {
     	$this->template->set('warehouse',$warehouse);
     	$this->template->set('sales',$sales);
     	$this->template->set('selling',$selling);
-    	$this->template->title('Penjualan');
-        $this->template->build('selling');
+    	$this->template->title('Faktur Jual');
+        $this->template->build('selling_create');
     }
 
     public function new_invoice()
@@ -31,6 +37,24 @@ class Selling extends CI_Controller {
     	$insert_id = $this->Selling_model->create_new_invoice();
     	if($insert_id)
     		redirect('selling/invoice/'.$insert_id);
+    }
+
+    public function getSellingList(){
+    	$this->load->model('Selling_model');
+        $products = $this->Selling_model->get_data();
+        foreach ($products as $key => $product) {
+        	$products[$key]['no'] = $key+1;
+        	$products[$key]['date_faktur'] = ($product['date_faktur']) ? date('Y-m-d',$product['date_faktur']) : '';
+        	$products[$key]['date_jt'] = ($product['date_jt']) ? date('Y-m-d',$product['date_jt']) : '';
+        	$products[$key]['edit'] = '<button type="button" class="btn btn-primary" onclick="window.location.href=\''.base_url().'selling/invoice/'.$products[$key]['id'].'\'">Edit</button>';
+        }
+        
+        $this->output
+          ->set_status_header(200)
+          ->set_content_type('application/json', 'utf-8')
+          ->set_output(json_encode($products, JSON_PRETTY_PRINT))
+          ->_display();
+          exit;
     }
 
     public function getStockSelling() {
@@ -45,9 +69,9 @@ class Selling extends CI_Controller {
         echo json_encode($stocks);
     }
 
-    public function getProductSelling(){
+    public function getProductSelling($selling_id){
     	$this->load->model('Selling_model');
-        $products = $this->Selling_model->get_product_selling();
+        $products = $this->Selling_model->get_product_selling($selling_id);
         $this->output
           ->set_status_header(200)
           ->set_content_type('application/json', 'utf-8')
