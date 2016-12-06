@@ -40,6 +40,10 @@
 <!-- Custom Theme Scripts -->
 <script src="<?php echo JS; ?>custom.min.js"></script>
 <script src="<?php echo JS; ?>global.js"></script>
+<script src="<?php echo JS; ?>migration.js"></script>
+<script src="<?php echo JS; ?>stocks.js"></script>
+<script src="<?php echo JS; ?>selling.js"></script>
+<script src="<?php echo JS; ?>user.js"></script>
 
 <!-- Flot -->
 <script>

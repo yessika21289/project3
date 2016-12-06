@@ -1,7 +1,7 @@
 <div class="">
   <div class="page-title">
     <div class="title_left">
-      <h3>Daftar User</h3>
+      <h3>User</h3>
     </div>
   </div>
 
@@ -15,7 +15,7 @@
         </div>
         <button type="button" class="btn btn-primary" onclick="window.location.href='<?php echo base_url(); ?>user/add'">+ Tambah User</button>
         <?php echo $this->session->flashdata('action_user');?>
-        <table id="datatable-fixed-header" class="table table-striped table-bordered">
+        <table id="table-user-list" class="table table-striped table-bordered">
           <thead>
             <tr>
               <th class="text-center">ID</th>

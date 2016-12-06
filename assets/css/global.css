@@ -2,3 +2,7 @@
 	padding:12px;
 	margin:10px 0px;
 }
+
+#table-user-access>thead>tr>th{
+	vertical-align: middle;
+}

@@ -102,4 +102,18 @@ class User extends CI_Controller {
           ->_display();
         exit;
     }
+
+    public function user_access()
+    {
+        $row = $this->user_model->get_user_access();
+        $this->template->set('row',$row);
+        $this->template->title('Akses User');
+        $this->template->build('user_access');
+    }
+
+    public function savePermission()
+    {
+        $save = $this->user_model->update_permission();
+        return $save;
+    }
 }

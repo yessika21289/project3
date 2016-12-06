@@ -95,4 +95,18 @@ class User_model extends CI_Model {
         	$row = $query->result();
         	return $row;
         }
+
+        public function get_user_access()
+        {
+            $query = $this->db->get('user_access');
+            return $query->result();
+        }
+
+        public function update_permission()
+        {
+            $this->db->set($this->input->post('role'), $this->input->post('value'));
+            $this->db->where('id', $this->input->post('id'));
+            $query = $this->db->update('user_access');
+            return $query;
+        }
 }
