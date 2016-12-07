@@ -6,10 +6,7 @@
 <script src="<?php echo base_url(); ?>/vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
 <script src="<?php echo base_url(); ?>/vendors/nprogress/nprogress.js"></script>
-<!-- Chart.js -->
-<script src="<?php echo base_url(); ?>/vendors/Chart.js/dist/Chart.min.js"></script>
-<!-- gauge.js -->
-<script src="<?php echo base_url(); ?>/vendors/gauge.js/dist/gauge.min.js"></script>
+
 <!-- bootstrap-progressbar -->
 <script src="<?php echo base_url(); ?>/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 <!-- iCheck -->
@@ -28,14 +25,19 @@
 <script src="<?php echo base_url(); ?>/vendors/flot.curvedlines/curvedLines.js"></script>
 <!-- DateJS -->
 <script src="<?php echo base_url(); ?>/vendors/DateJS/build/date.js"></script>
-<!-- JQVMap -->
-<script src="<?php echo base_url(); ?>/vendors/jqvmap/dist/jquery.vmap.js"></script>
-<script src="<?php echo base_url(); ?>/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="<?php echo base_url(); ?>/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+
 <!-- bootstrap-daterangepicker -->
 <script src="<?php echo base_url(); ?>/vendors/moment/min/moment.min.js"></script>
 <script src="<?php echo base_url(); ?>/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="<?php echo base_url(); ?>/vendors/bootstrap3-typeahead.min.js"></script>
+
+<!-- DataTables -->
+<script src="<?php echo base_url(); ?>/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url(); ?>/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?php echo base_url(); ?>/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+
+<script src="<?php echo base_url(); ?>/vendors/autoNumeric.min.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="<?php echo JS; ?>custom.min.js"></script>
@@ -122,7 +124,7 @@
 <!-- /Flot -->
 
 <!-- JQVMap -->
-<script>
+<!--<script>
     $(document).ready(function(){
         $('#world-map-gdp').vectorMap({
             map: 'world_en',
@@ -137,7 +139,7 @@
             normalizeFunction: 'polynomial'
         });
     });
-</script>
+</script>-->
 <!-- /JQVMap -->
 
 <!-- Skycons -->
@@ -162,7 +164,7 @@
 <!-- /Skycons -->
 
 <!-- Doughnut Chart -->
-<script>
+<!--<script>
     $(document).ready(function(){
         var options = {
             legend: false,
@@ -201,7 +203,7 @@
             options: options
         });
     });
-</script>
+</script>-->
 <!-- /Doughnut Chart -->
 
 <!-- bootstrap-daterangepicker -->
@@ -279,7 +281,7 @@
 <!-- /bootstrap-daterangepicker -->
 
 <!-- gauge.js -->
-<script>
+<!--<script>
     var opts = {
         lines: 12,
         angle: 0,
@@ -302,5 +304,5 @@
     gauge.animationSpeed = 32;
     gauge.set(3200);
     gauge.setTextField(document.getElementById("gauge-text"));
-</script>
+</script>-->
 <!-- /gauge.js -->
