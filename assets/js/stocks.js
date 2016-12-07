@@ -20,7 +20,7 @@ $(document).ready(function() {
         "autoWidth": true,
         "pageLength": 10,
         "ajax": {
-            "url": './stocks/get-data',
+            "url": '/stocks/get-data',
             'dataSrc':''
         },
         "columns": [
@@ -41,7 +41,7 @@ $(document).ready(function() {
     });
 
     var $category = $('.category');
-    $.get('./stocks/categories', function(data){
+    $.get('/stocks/categories', function(data){
         $category.typeahead({
             source: data,
             autoSelect: true
@@ -63,7 +63,7 @@ $(document).ready(function() {
     });
 
     var $name = $('.name');
-    $.get('./stocks/names', function(data){
+    $.get('/stocks/names', function(data){
         $name.typeahead({
             source: data,
             autoSelect: true

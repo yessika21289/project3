@@ -88,7 +88,7 @@ $(document).ready(function() {
         "info": false,
         "responsive": true,
         "autoWidth": true,
-        "pageLength": 5,
+        "pageLength": 10,
         "ajax": {
             "url": '/selling/getStockSelling',
             'dataSrc':''
@@ -115,9 +115,9 @@ $(document).ready(function() {
 
     $('#stocks-table-selling tbody').on('click', 'tr', function () {
         var data = stocks_table_selling.row( this ).data();
-        $('#product-id').val(29);
-        $('#product-name').val('willi');
-        $('#myModal2').modal('hide');
+        $('#product-id').val(data.pid);
+        $('#product-name').val(data.name);
+        $('#product-list-modal').modal('hide');
     } );
 
     var cust_table = $('#customer-table').DataTable({
