@@ -12,6 +12,12 @@ class Migration extends CI_Controller {
      * Index Page for this controller.
      */
 
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('API_model');
+        $this->load->model('Migration_model');
+    }
+
     public function index()
     {
         $this->template->title('Migrasi Data');
@@ -20,13 +26,11 @@ class Migration extends CI_Controller {
             $this->template->build('migration', $data);
         } else {
             if($_GET['migrate'] == 'stocks') {
-                $this->load->model('Migration_model');
                 $old_stok = $this->Migration_model->old_stok();
 
                 $i = 0;
                 foreach($old_stok as $row) {
-                    $this->load->model('Categories_model');
-                    $id = $this->Categories_model->get_categories('id', array('name' => $row->NAMA_GROUP));
+                    $id = $this->API_model->get_data('categories', 'id', array('name' => $row->NAMA_GROUP));
                     $size = $this->sizeMapping($row->TIPE);
                     $qty = $this->qtyMapping($row->VOL, $size);
                     $data[$i] = array(

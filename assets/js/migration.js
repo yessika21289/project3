@@ -15,7 +15,7 @@ $(document).ready(function() {
             },
             success:function (data) {
                 loading.hide();
-                document.location.href = './migration'
+                //document.location.href = './migration'
             }
         });
     });

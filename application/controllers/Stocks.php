@@ -14,6 +14,7 @@ class Stocks extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('API_model');
         $this->load->model('Stocks_model');
     }
 
@@ -72,8 +73,9 @@ class Stocks extends CI_Controller {
     }
 
     public function add() {
+        $data['warehouses'] = $this->API_model->get_data('warehouses', NULL, ['main' => 'DESC'], 'name');
         $this->template->title('Stok Barang');
-        $this->template->build('add_stock_form');
+        $this->template->build('add_stock_form', $data);
     }
     
     public function addData() {
