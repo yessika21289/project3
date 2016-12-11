@@ -9,18 +9,7 @@
             <div class="x_content">
                 <br />
                 <form data-parsley-validate class="add-stock-form form-horizontal form-label-left" action="<?php echo base_url(); ?>stocks/add-data" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gudang</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select class="form-control">
-                                <option>Choose option</option>
-                                <option>Option one</option>
-                                <option>Option two</option>
-                                <option>Option three</option>
-                                <option>Option four</option>
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori <span class="required">*</span>
                         </label>

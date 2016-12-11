@@ -6,10 +6,7 @@ $(document).ready(function() {
     $('#stocks_migration').click(function () {
         $.ajax({
             type:'GET',
-            url:'./migration',
-            data: {
-                migrate: 'stocks'
-            },
+            url:'./migration/stocks',
             beforeSend: function(data) {
                 loading.show();
             },

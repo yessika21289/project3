@@ -8,14 +8,12 @@
 
 class API_model extends CI_Model
 {
-    function get_data($table, $param = NULL, $order_by = NULL, $column = NULL) {
+    function get_data($table, $where = array(), $order_by = array(), $column = NULL) {
         if($column) {
             $this->db->select($column);
         }
-        if($param) {
-            foreach($param as $key => $val) {
-                $this->db->where($key, $val);
-            }
+        if($where) {
+            $this->db->where($where);
         }
         if($order_by) {
             foreach($order_by as $key => $val) {
@@ -23,7 +21,10 @@ class API_model extends CI_Model
             }
         }
         $query = $this->db->get($table);
-        return $query->result();
+        $result = $query->result();
+        if($result)
+            return $result;
+        else return NULL;
     }
 
 }

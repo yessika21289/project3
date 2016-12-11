@@ -21,39 +21,105 @@ class Migration extends CI_Controller {
     public function index()
     {
         $this->template->title('Migrasi Data');
-        if(!$_GET) {
-            $data['message'] = $this->session->flashdata('message');
-            $this->template->build('migration', $data);
-        } else {
-            if($_GET['migrate'] == 'stocks') {
-                $old_stok = $this->Migration_model->old_stok();
 
-                $i = 0;
-                foreach($old_stok as $row) {
-                    $id = $this->API_model->get_data('categories', 'id', array('name' => $row->NAMA_GROUP));
-                    $size = $this->sizeMapping($row->TIPE);
-                    $qty = $this->qtyMapping($row->VOL, $size);
-                    $data[$i] = array(
-                        'category_id'   => ($id) ? $id[0]->id : NULL,
-                        'name'          => ($row->NAMA) ? $row->NAMA : NULL,
-                        'length'        => ($size) ? $size['length'] : NULL,
-                        'wide'          => ($size) ? $size['wide'] : NULL,
-                        'qty'           => ($qty) ? $qty['qty'] : NULL,
-                        'box'           => ($row->G00001) ? $row->G00001 : NULL,
-                        'total'         => ($qty && $row->G00001) ? $qty['qty']*$row->G00001 : NULL,
-                        'coverage'      => ($qty) ? ($qty['qty']*($size['length']/100)*($size['wide']/100)) : NULL
-                    );
-                    $i++;
-                }
+        $data['message'] = $this->session->flashdata('message');
+        $this->template->build('migration', $data);
+    }
 
-                $insert = $this->Migration_model->insert_products($data);
+    public function stocks() {
+        //$this->productsMapping();
+        //$this->reprocessProducts();
 
-                $message = 'Migrasi data stok selesai.';
-                if($insert['failed_list']) $message .= ' Beberapa data yang gagal dimigrasi: '.$insert['failed_list'].'.';
-
-                $this->session->set_flashdata('message', $message);
+        $this->load->model('Stocks_model');
+        $products = $this->Stocks_model->get_products();
+        foreach($products as $product) {
+            $condition = array(
+                'NAMA_GROUP'    => $product['category'] == 'General' ? '' : $product['category'],
+                'KODE'          => $product['kode'],
+                'NAMA'          => $product['name']
+            );
+            $stoks = $this->Migration_model->old_stok($condition);
+            foreach($stoks as $stok) {
+                $insert = array(
+                    'pid'   => $product['pid'],
+                    'box'   => ($stok->G00001) ? $stok->G00001 : NULL,
+                    'total' => ($product['qty'] && $stok->G00001) ? $product['qty']*$stok->G00001 : NULL,
+                    'created_by'    => 'superadmin',
+                    'created_at'    => time(),
+                    'updated_by'    => 'superadmin',
+                    'updated_at'    => time()
+                );
+                $this->Migration_model->insert_stocks($insert);
             }
         }
+
+        $message = 'Migrasi data stok selesai.';
+        $this->session->set_flashdata('message', $message);
+    }
+
+    public function productsMapping() {
+        $update = array();
+        $insert = array();
+        $old_products = $this->Migration_model->old_products();
+        foreach($old_products as $key => $row) {
+            $category_name = $row->NAMA_GROUP ? $row->NAMA_GROUP : "General";
+            $categories = $this->API_model->get_data('categories', array('name' => $category_name), NULL, 'id');
+            $category_id = NULL;
+            if($categories) {
+                foreach ($categories as $val) {
+                    $category_id = $val->id;
+                }
+            }
+            $size = $this->sizeMapping($row->TIPE);
+            $qty = $this->qtyMapping($row->VOL, $size);
+            $coverage = ($qty) ? ($qty['qty']*($size['length']/100)*($size['wide']/100)) : NULL;
+
+            $condition = array(
+                'category_id'   => $category_id,
+                'name'          => $row->NAMA,
+                'length'        => $size['length'],
+                'wide'          => $size['wide'],
+                'qty'           => $qty['qty'],
+                'coverage >='   => $coverage - 0.00001,
+                'coverage <='   => $coverage + 0.00001
+            );
+            $is_exist = $this->API_model->get_data('products', $condition, NULL, 'pid');
+            if($is_exist) {
+                $update[$key] = array(
+                    'pid'           => $is_exist[0]->pid,
+                    'category_id'   => $category_id,
+                    'name'          => ($row->NAMA) ? $row->NAMA : NULL,
+                    'length'        => ($size) ? $size['length'] : NULL,
+                    'wide'          => ($size) ? $size['wide'] : NULL,
+                    'qty'           => ($qty['qty']) ? $qty['qty'] : NULL,
+                    'coverage'      => $coverage,
+                    'updated_by'    => 'superadmin',
+                    'updated_at'    => time()
+                );
+            } else {
+                $insert[$key] = array(
+                    'kode'          => $row->KODE,
+                    'category_id'   => $category_id,
+                    'name'          => ($row->NAMA) ? $row->NAMA : NULL,
+                    'length'        => ($size) ? $size['length'] : NULL,
+                    'wide'          => ($size) ? $size['wide'] : NULL,
+                    'qty'           => ($qty) ? $qty['qty'] : NULL,
+                    'coverage'      => $coverage,
+                    'created_by'    => 'superadmin',
+                    'created_at'    => time(),
+                    'updated_by'    => 'superadmin',
+                    'updated_at'    => time()
+                );
+            }
+        }
+
+        if($insert) $this->Migration_model->insert_products($insert);
+        if($update) $this->Migration_model->update_products($update);
+        return true;
+    }
+
+    public function reprocessProducts() {
+        $this->Migration_model->delete_duplicates();
     }
 
     public function sizeMapping($size = NULL) {

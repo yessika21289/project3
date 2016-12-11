@@ -1,13 +1,19 @@
 <div class="">
     <div class="page-title">
+        <?php if($report): ?>
+            <div class="alert <?php echo $report['status'] ? 'alert-success' : 'alert-danger' ?> alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <strong><?php echo $report['message']; ?></strong>
+            </div>
+        <?php endif; ?>
         <div class="title_left">
             <h3>Daftar Stok Barang<small> di seluruh gudang</small></h3>
         </div>
     </div>
     <div class="clearfix"></div>
 
-    <!-- Large modal -->
-    <a href="<?php echo site_url('stocks/add'); ?>" id="add-stock-btn" class="btn btn-success" data-toggle="modal">Tambah Stok</a>
+    <a href="<?php echo site_url('stocks/input-form'); ?>" id="add-stock-btn" class="btn btn-success" data-toggle="modal">Tambah Stok</a>
 
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">

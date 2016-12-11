@@ -93,6 +93,8 @@ $(document).ready(function() {
         });
     });
 
+    
+
     var $name = $('.name');
     $.get('/stocks/names', function(data){
         $name.typeahead({

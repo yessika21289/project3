@@ -36,7 +36,7 @@
                     </li>
                     <li><a><i class="fa fa-cubes"></i> Stok <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="<?php echo site_url('stocks/add'); ?>">Tambah Stok</a></li>
+                            <li><a href="<?php echo site_url('stocks/input-form'); ?>">Tambah Stok</a></li>
                             <li><a href="<?php echo site_url('stocks'); ?>">Daftar Stok</a></li>
                         </ul>
                     </li>

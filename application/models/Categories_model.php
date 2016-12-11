@@ -8,16 +8,20 @@
 
 class Categories_model extends CI_Model
 {
-    function get_categories($column = NULL, $param = NULL) {
-        if($column) {
-            $this->db->select($column);
+    function add_category($name = NULL) {
+        if(!$name) {
+            return false;
         }
-        if($param) {
-            foreach($param as $key => $val) {
-                $this->db->where($key, $val);
-            }
-        }
-        $query = $this->db->get('categories');
-        return $query->result();
+
+        $data = array(
+            'name'          => $name,
+            'created_at'    => time(),
+            'created_by'    => 'superadmin',
+            'updated_at'    => time(),
+            'updated_by'    => 'superadmin'
+        );
+        $this->db->insert('categories', $data);
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
     }
 }
